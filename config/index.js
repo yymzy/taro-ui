@@ -5,16 +5,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const isBuildComponent = process.env.TARO_BUILD_TYPE === 'component'
 
 const config = {
-  projectName: 'taro-ui',
+  projectName: 'taro-ui2',
   designWidth: 750,
   sourceRoot: 'src',
   outputRoot: isBuildComponent ? 'dist' : `dist/${process.env.TARO_ENV}`,
-  plugins: {},
+  plugins: ['@tarojs/plugin-sass'],
   babel: {
     sourceMap: true,
-    presets: [
-      'env'
-    ],
+    presets: ['env'],
     plugins: [
       'transform-class-properties',
       'transform-decorators-legacy',
@@ -23,7 +21,7 @@ const config = {
   },
   defineConstants: {},
   alias: {
-    'taro-ui': path.resolve(__dirname, '../src/ui.ts'),
+    'taro-ui': path.resolve(__dirname, '../src/ui.ts')
   },
   mini: {},
   h5: {
@@ -33,7 +31,7 @@ const config = {
         enable: true
       }
     }
-  },
+  }
 }
 
 if (isBuildComponent) {
@@ -57,22 +55,24 @@ if (isBuildComponent) {
         classnames: 'commonjs2 classnames',
         '@tarojs/components': 'commonjs2 @tarojs/components',
         '@tarojs/taro-h5': 'commonjs2 @tarojs/taro-h5',
-        'weui': 'commonjs2 weui'
+        weui: 'commonjs2 weui'
       },
       plugin: {
         extractCSS: {
           plugin: MiniCssExtractPlugin,
-          args: [{
-            filename: 'css/index.css',
-            chunkFilename: 'css/[id].css'
-          }]
+          args: [
+            {
+              filename: 'css/index.css',
+              chunkFilename: 'css/[id].css'
+            }
+          ]
         }
       }
     })
   }
 }
 
-module.exports = function (merge) {
+module.exports = function(merge) {
   if (process.env.NODE_ENV === 'development') {
     return merge({}, config, require('./dev'))
   }

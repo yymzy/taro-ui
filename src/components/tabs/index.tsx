@@ -222,6 +222,7 @@ export default class AtTabs extends AtComponent<AtTabsProps, AtTabsState> {
             scrollLeft={_scrollLeft}
             scrollTop={_scrollTop}
             scrollIntoView={_scrollIntoView}
+            enableFlex
           >
             {tabItems}
           </ScrollView>

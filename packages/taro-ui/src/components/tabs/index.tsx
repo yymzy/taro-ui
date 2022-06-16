@@ -81,6 +81,8 @@ export default class AtTabs extends React.Component<AtTabsProps, AtTabsState> {
     // 获取触摸时的原点
     this._touchDot = e.touches[0].pageX
     // 使用js计时器记录时间
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     this._timer = setInterval(() => {
       this._interval++
     }, 100)
@@ -186,7 +188,7 @@ export default class AtTabs extends React.Component<AtTabsProps, AtTabsState> {
         <View
           className={itemCls}
           id={`tab${this._tabId}${idx}`}
-          key={item.title}
+          key={`at-tabs-item-${idx}`}
           onClick={this.handleClick.bind(this, idx)}
         >
           {item.title}
@@ -219,6 +221,9 @@ export default class AtTabs extends React.Component<AtTabsProps, AtTabsState> {
             scrollLeft={_scrollLeft}
             scrollTop={_scrollTop}
             scrollIntoView={_scrollIntoView}
+            enableFlex
+            enhanced
+            showScrollbar={false}
           >
             {tabItems}
           </ScrollView>

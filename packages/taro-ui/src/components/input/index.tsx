@@ -22,7 +22,7 @@ type GetInputPropsReturn = PickAtInputProps & Pick<InputProps, 'type'>
 function getInputProps(props: AtInputProps): GetInputPropsReturn {
   const actualProps = {
     type: props.type,
-    maxLength: props.maxlength,
+    maxlength: props.maxlength,
     disabled: props.disabled,
     password: false
   }
@@ -30,7 +30,7 @@ function getInputProps(props: AtInputProps): GetInputPropsReturn {
   switch (actualProps.type) {
     case 'phone':
       actualProps.type = 'number'
-      actualProps.maxLength = 11
+      actualProps.maxlength = 11
       break
     case 'password':
       actualProps.type = 'text'
@@ -124,6 +124,7 @@ export default class AtInput extends React.Component<AtInputProps> {
       placeholder,
       placeholderStyle,
       placeholderClass,
+      alwaysEmbed,
       autoFocus,
       focus,
       value,
@@ -147,15 +148,15 @@ export default class AtInput extends React.Component<AtInputProps> {
     })
     const placeholderCls = classNames('placeholder', placeholderClass)
 
+    const id = name && { id: name }
     return (
       <View className={rootCls} style={customStyle}>
         <View className={containerCls}>
           <View className={overlayCls} onClick={this.handleClick}></View>
           {title && (
             <Label
-              className={`at-input__title ${
-                required && 'at-input__title--required'
-              }`}
+              className={`at-input__title ${required && 'at-input__title--required'
+                }`}
               for={name}
             >
               {title}
@@ -163,7 +164,7 @@ export default class AtInput extends React.Component<AtInputProps> {
           )}
           <Input
             className='at-input__input'
-            id={name}
+            {...id}
             name={name}
             type={type}
             password={password}
@@ -187,6 +188,7 @@ export default class AtInput extends React.Component<AtInputProps> {
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             onKeyboardHeightChange={this.handleKeyboardHeightChange}
+            alwaysEmbed={alwaysEmbed}
           />
           {clear && value && (
             <View className='at-input__icon' onTouchEnd={this.handleClearValue}>
@@ -234,7 +236,7 @@ AtInput.defaultProps = {
   focus: false,
   required: false,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onChange: (): void => {}
+  onChange: (): void => { }
 }
 
 AtInput.propTypes = {
@@ -259,6 +261,7 @@ AtInput.propTypes = {
   editable: PropTypes.bool,
   error: PropTypes.bool,
   clear: PropTypes.bool,
+  alwaysEmbed: PropTypes.bool,
   autoFocus: PropTypes.bool,
   focus: PropTypes.bool,
   onChange: PropTypes.func,
@@ -267,5 +270,5 @@ AtInput.propTypes = {
   onConfirm: PropTypes.func,
   onErrorClick: PropTypes.func,
   onClick: PropTypes.func,
-  required: PropTypes.bool
+  required: PropTypes.bool,
 }

@@ -15,14 +15,14 @@ import {
 
 type PickAtInputProps = Pick<
   AtInputProps,
-  'maxlength' | 'disabled' | 'password'
+  'maxLength' | 'maxlength' | 'disabled' | 'password'
 >
 type GetInputPropsReturn = PickAtInputProps & Pick<InputProps, 'type'>
 
 function getInputProps(props: AtInputProps): GetInputPropsReturn {
   const actualProps = {
     type: props.type,
-    maxlength: props.maxlength,
+    maxLength: props.maxLength || props.maxlength,
     disabled: props.disabled,
     password: false
   }
@@ -30,7 +30,7 @@ function getInputProps(props: AtInputProps): GetInputPropsReturn {
   switch (actualProps.type) {
     case 'phone':
       actualProps.type = 'number'
-      actualProps.maxlength = 11
+      actualProps.maxLength = 11
       break
     case 'password':
       actualProps.type = 'text'
@@ -124,13 +124,14 @@ export default class AtInput extends React.Component<AtInputProps> {
       placeholder,
       placeholderStyle,
       placeholderClass,
-      alwaysEmbed,
       autoFocus,
       focus,
       value,
-      required
+      required,
+      // @yym-mix
+      alwaysEmbed
     } = this.props
-    const { type, maxlength, disabled, password } = getInputProps(this.props)
+    const { type, maxLength, disabled, password } = getInputProps(this.props)
 
     const rootCls = classNames(
       'at-input',
@@ -155,8 +156,9 @@ export default class AtInput extends React.Component<AtInputProps> {
           <View className={overlayCls} onClick={this.handleClick}></View>
           {title && (
             <Label
-              className={`at-input__title ${required && 'at-input__title--required'
-                }`}
+              className={`at-input__title ${
+                required && 'at-input__title--required'
+              }`}
               for={name}
             >
               {title}
@@ -167,12 +169,13 @@ export default class AtInput extends React.Component<AtInputProps> {
             {...id}
             name={name}
             type={type}
+            disabled={disabled}
             password={password}
             placeholderStyle={placeholderStyle}
             placeholderClass={placeholderCls}
             placeholder={placeholder}
             cursorSpacing={cursorSpacing}
-            maxlength={maxlength}
+            maxlength={maxLength}
             autoFocus={autoFocus}
             focus={focus}
             value={value}
@@ -188,6 +191,7 @@ export default class AtInput extends React.Component<AtInputProps> {
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             onKeyboardHeightChange={this.handleKeyboardHeightChange}
+            // @yym-mix
             alwaysEmbed={alwaysEmbed}
           />
           {clear && value && (
@@ -226,6 +230,7 @@ AtInput.defaultProps = {
   selectionEnd: -1,
   adjustPosition: true,
   maxlength: 140,
+  maxLength: 140,
   type: 'text',
   disabled: false,
   border: true,
@@ -236,7 +241,9 @@ AtInput.defaultProps = {
   focus: false,
   required: false,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onChange: (): void => { }
+  onChange: (): void => {},
+  // @yym-mix
+  alwaysEmbed: false
 }
 
 AtInput.propTypes = {
@@ -255,13 +262,13 @@ AtInput.propTypes = {
   adjustPosition: PropTypes.bool,
   cursorSpacing: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   maxlength: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  maxLength: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   type: PropTypes.string,
   disabled: PropTypes.bool,
   border: PropTypes.bool,
   editable: PropTypes.bool,
   error: PropTypes.bool,
   clear: PropTypes.bool,
-  alwaysEmbed: PropTypes.bool,
   autoFocus: PropTypes.bool,
   focus: PropTypes.bool,
   onChange: PropTypes.func,
@@ -271,4 +278,6 @@ AtInput.propTypes = {
   onErrorClick: PropTypes.func,
   onClick: PropTypes.func,
   required: PropTypes.bool,
+  // @yym-mix
+  alwaysEmbed: PropTypes.bool,
 }

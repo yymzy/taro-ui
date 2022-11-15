@@ -184,6 +184,7 @@ export default class AtSwipeAction extends React.Component<
                     style={item.style}
                     onClick={(e): void => this.handleClick(item, key, e)}
                     className={classNames(
+                      // @ts-ignore
                       'at-swipe-action__option',
                       item.className
                     )}

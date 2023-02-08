@@ -109,6 +109,7 @@ export default class AtInput extends AtComponent<AtInputProps> {
 
   public render(): JSX.Element {
     const {
+      enableNative,
       alwaysEmbed,
       className,
       customStyle,
@@ -186,6 +187,7 @@ export default class AtInput extends AtComponent<AtInputProps> {
             onBlur={this.handleBlur}
             onConfirm={this.handleConfirm}
             alwaysEmbed={alwaysEmbed}
+            enableNative={enableNative}
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             onKeyboardHeightChange={this.handleKeyboardHeightChange}
@@ -275,5 +277,6 @@ AtInput.propTypes = {
   onErrorClick: PropTypes.func,
   onClick: PropTypes.func,
   required: PropTypes.bool,
-  alwaysEmbed: PropTypes.bool
+  alwaysEmbed: PropTypes.bool,
+  enableNative: PropTypes.bool
 }

@@ -31,20 +31,21 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const { data: items } = this.props
+    const { data: items, mode } = this.props
+    const darktext = mode === 'dark' ? 'darktext' : ''
 
     return (
       <nav className='at-nav'>
         {items.map(item => (
-          <div key={item.name}>
-            <h2 className='at-nav__title'>{item.title}</h2>
+          <div key={item.title}>
+            <h2 className={classnames('at-nav__title', { darktext })}>{item.title}</h2>
             <ul className='at-nav__items'>
               {item.items &&
-                item.items.map(navItem => (
-                  <li className='at-nav__item' key={navItem.name}>
+                item.items.map((navItem, index) => (
+                  <li className='at-nav__item' key={index}>
                     <NavLink
                       exact
-                      className='at-nav__page'
+                      className={classnames('at-nav__page', { darktext })}
                       activeClassName='router-link-exact-active router-link-active'
                       to={{
                         pathname: `/${item.name.toLowerCase()}/${navItem.name.toLowerCase()}`
@@ -57,9 +58,9 @@ class Sidebar extends React.Component {
                 ))}
               {item.groups &&
                 item.groups.map((group, idx) => (
-                  <li className='at-nav__item active' key={group.title}>
+                  <li className='at-nav__item active' key={idx}>
                     <a
-                      className='at-nav__group'
+                      className={classnames('at-nav__group', { darktext })}
                       onClick={this.toggleMenu.bind(this, idx)}
                     >
                       {group.title}
@@ -82,13 +83,13 @@ class Sidebar extends React.Component {
                         {group.items.map(navItem => (
                           <li className='at-nav__child-item' key={navItem.name}>
                             <NavLink
-                              className='at-nav__component'
+                              className={classnames('at-nav__component', { darktext })}
                               activeClassName='router-link-exact-active router-link-active'
                               to={`/docs/${navItem.name.toLowerCase()}`}
                               replace
                             >
                               {navItem.name}
-                              <span>{navItem.title}</span>
+                              <span className={classnames('', { darktext })}>{navItem.title}</span>
                             </NavLink>
                           </li>
                         ))}

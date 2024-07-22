@@ -1,9 +1,10 @@
 import Taro from '@tarojs/taro'
+import React from 'react'
 import { SelectorQuery } from '@tarojs/taro/types/index'
 
 const ENV = Taro.getEnv()
 
-function delay(delayTime = 25): Promise<null> {
+function delay(delayTime = 25): Promise<void> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve()
@@ -16,14 +17,16 @@ function delayQuerySelector(
   delayTime = 500
 ): Promise<any[]> {
   return new Promise(resolve => {
-    const selector: SelectorQuery = Taro.createSelectorQuery()
-    delay(delayTime).then(() => {
-      selector
-        .select(selectorStr)
-        .boundingClientRect()
-        .exec((res: any[]) => {
-          resolve(res)
-        })
+    Taro.nextTick(() => {
+      const selector: SelectorQuery = Taro.createSelectorQuery()
+      delay(delayTime).then(() => {
+        selector
+          .select(selectorStr)
+          .boundingClientRect()
+          .exec((res: any[]) => {
+            resolve(res)
+          })
+      })
     })
   })
 }
@@ -211,13 +214,8 @@ function handleTouchScroll(flag: any): void {
 
 function pxTransform(size: number): string {
   if (!size) return ''
-  const designWidth = 750
-  const deviceRatio = {
-    640: 2.34 / 2,
-    750: 1,
-    828: 1.81 / 2
-  }
-  return `${size / deviceRatio[designWidth]}rpx`
+
+  return Taro.pxTransform(size)
 }
 
 function objectToString(style: object | string): string {
@@ -255,6 +253,21 @@ function mergeStyle(
   return objectToString(style1) + objectToString(style2)
 }
 
+/**
+ * 自定义验证器，用于验证参数是否是 JSX.Element
+ * @param {any} props
+ * @param {string} propName
+ * @param {string} componentName
+ * @returns
+ */
+function isJSXElement(props, propName, componentName) {
+  if (!React.isValidElement(props[propName])) {
+    return new Error(
+      `Invalid prop ${propName} supplied to ${componentName}. It must be a valid JSX element.`
+    )
+  }
+}
+
 export {
   delay,
   delayQuerySelector,
@@ -266,5 +279,6 @@ export {
   handleTouchScroll,
   delayGetClientRect,
   delayGetScrollOffset,
-  mergeStyle
+  mergeStyle,
+  isJSXElement
 }

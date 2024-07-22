@@ -1,7 +1,70 @@
-# Change Log
+# 3.2.2 (2024-01-04)
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+
+### Bug Fixes
+
+* 修复 taro 模板安装 taro-ui 时的报错 ([1b7652b](https://github.com/nervjs/taro-ui/commit/1b7652b91ab9ff44309cbfe91538e916582a3d1a)), closes [#1732](https://github.com/nervjs/taro-ui/issues/1732) [#1718](https://github.com/nervjs/taro-ui/issues/1718)
+
+
+# 3.2.1 (2024-01-03)
+
+
+### Bug Fixes
+
+* **h5:** 解决 AtNoticebar 组件在 web 端卡顿的问题 ([3c07b6d](https://github.com/nervjs/taro-ui/commit/3c07b6d6bc5e1c86cc0217063f976faf395af960)), closes [#1714](https://github.com/nervjs/taro-ui/issues/1714)
+
+
+### Features
+
+* 添加无法自定义显示天，时，分，秒 ([37fc4d4](https://github.com/nervjs/taro-ui/commit/37fc4d41b052c0940c32043c08dd08f43b9525a0)), closes [#1716](https://github.com/nervjs/taro-ui/issues/1716)
+
+
+# 3.2.0 (2023-11-20)
+
+New Features
+
+- 添加 Timeline 获取节点信息事件 (#1650)
+- List 组件支持自定义 icon 属性 (#1626)
+- Card 组件 extra 属性支持 ReactNode (#1684)
+
+Bug Fixes
+
+- 修复 AtAccordion 组件展开高度错误的问题 (#1656)
+- 修复 enableNative 属性不存在的问题 (#1654)
+- 修复日历组件无法正常加载的问题
+
+Improvements
+
+- yarn 升级到 pnpm
+- 完善 CI 流程
+- 更新 Taro-UI 文档地址
+
+# 3.1.0 (2023-08-20)
+
+
+### Bug Fixes
+
+* **modal:** 修复 content 中包含 \n 而无法换行的问题 [#1617](https://github.com/nervjs/taro-ui/issues/1617) ([b404c6b](https://github.com/nervjs/taro-ui/commit/b404c6ba5410a062b6626e631916dfc7cc130f56))
+* **types:** 修复 atMessage类型丢失的问题 ([4cf5335](https://github.com/nervjs/taro-ui/commit/4cf5335be670c3272743826de21971876cdba098)), closes [#1589](https://github.com/nervjs/taro-ui/issues/1589)
+* **types:** 修复类型声明不正确的问题 ([7d2610a](https://github.com/nervjs/taro-ui/commit/7d2610a688a5b656def15dc564d92f02bb8697c8))
+* **types:** 修复类型声明问题 ([ca82492](https://github.com/nervjs/taro-ui/commit/ca82492c30de1d5d58e3bef24bfe980381e5e9ab))
+* 修复 disabled 不生效的问题 ([#1549](https://github.com/nervjs/taro-ui/issues/1549)) ([8e9a7bd](https://github.com/nervjs/taro-ui/commit/8e9a7bd253fa2bff167786c5846a57f4632ff2f3))
+* 修复初始化 RootSiblings 报错的问题 ([bb354e0](https://github.com/nervjs/taro-ui/commit/bb354e08410f593f586bd0bea7eaf54553e03201))
+* 修复类型声明异常的问题 ([da406aa](https://github.com/nervjs/taro-ui/commit/da406aa0ed0ab92d8dd7d6700a49465c5d765ea8))
+* 更新依赖，解决 ts 类型错误 ([af562a7](https://github.com/nervjs/taro-ui/commit/af562a77ebba0968d6a5b44364b112a5368336f1))
+* 解决 input 组件 focus 状态丢失的问题 ([3538c3d](https://github.com/nervjs/taro-ui/commit/3538c3d830ca6cd46dc7d2963fe6f1a099e1c25d)), closes [#1463](https://github.com/nervjs/taro-ui/issues/1463)
+
+
+### Features
+
+* AtSearchBar 增加 enableNative 参数 ([09863bd](https://github.com/nervjs/taro-ui/commit/09863bd0813e2e3682b8832c143c79e9a2522408))
+* **nav-bar:** 增加标题点击事件 ([369e71e](https://github.com/nervjs/taro-ui/commit/369e71ee6852748e654eee3e6edebdf34a8d042b))
+* react 升级到 18，并解决兼容性问题 ([e8ec931](https://github.com/nervjs/taro-ui/commit/e8ec9319a8a83ee4c35f8fb84d4b6c457f199a5d))
+* rn 0.71 ([dc77a8a](https://github.com/nervjs/taro-ui/commit/dc77a8aea76b179cf5f21fbf250ed75b14918162))
+* 兼容到 Taro3.4.3 ([66a990d](https://github.com/nervjs/taro-ui/commit/66a990d7f6b176c4a39911e600201268322557d3))
+* 更新3.6 依赖 ([cbbdf77](https://github.com/nervjs/taro-ui/commit/cbbdf771a492daf6225f3b4bdc67655fcbf47f04))
+
 
 # 3.0.0-alpha.2 (2020-04-18)
 

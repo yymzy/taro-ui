@@ -21,14 +21,14 @@ export function handleActive(
   const dayjsStart = start ? dayjs(start) : dayjsEnd
 
   item.isSelected =
-    _value.isSame(dayjsEnd) ||
-    _value.isSame(dayjsStart) ||
-    (_value.isAfter(dayjsStart) && _value.isBefore(dayjsEnd))
+    _value?.isSame(dayjsEnd) ||
+    _value?.isSame(dayjsStart) ||
+    (_value?.isAfter(dayjsStart) && _value?.isBefore(dayjsEnd))
 
-  item.isSelectedHead = _value.isSame(dayjsStart)
-  item.isSelectedTail = _value.isSame(dayjsEnd)
+  item.isSelectedHead = _value?.isSame(dayjsStart)
+  item.isSelectedTail = _value?.isSame(dayjsEnd)
 
-  item.isToday = _value.diff(dayjs(Date.now()).startOf('day'), 'day') === 0
+  item.isToday = _value?.diff(dayjs(Date.now()).startOf('day'), 'day') === 0
 
   return item
 }
@@ -42,7 +42,7 @@ export function handleMarks(
   const { marks } = options
 
   const markList = marks.filter(mark =>
-    dayjs(mark.value).startOf('day').isSame(_value)
+    _value ? dayjs(mark.value).startOf('day').isSame(_value) : false
   )
 
   item.marks = markList.slice(0, 1)
@@ -94,8 +94,8 @@ export function handleDisabled(
   const dayjsMaxDate = dayjs(maxDate)
 
   item.isDisabled =
-    !!(minDate && _value.isBefore(dayjsMinDate)) ||
-    !!(maxDate && _value.isAfter(dayjsMaxDate))
+    !!(minDate && _value?.isBefore(dayjsMinDate)) ||
+    !!(maxDate && _value?.isAfter(dayjsMaxDate))
 
   return item
 }
@@ -110,7 +110,7 @@ export function handleValid(
 
   if (!_isEmpty(validDates)) {
     const isInclude = validDates.some(date =>
-      dayjs(date.value).startOf('day').isSame(_value)
+      _value ? dayjs(date.value).startOf('day').isSame(_value) : false
     )
 
     item.isDisabled = !isInclude

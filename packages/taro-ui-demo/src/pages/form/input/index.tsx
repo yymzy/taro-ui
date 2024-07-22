@@ -2,8 +2,6 @@ import React from 'react'
 import { AtForm, AtInput } from 'taro-ui'
 import { Image, View } from '@tarojs/components'
 import { BaseEventOrig } from '@tarojs/components/types/common'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
 import { InputProps } from '@tarojs/components/types/Input'
 import Taro from '@tarojs/taro'
 import verificationCode from '../../../assets/images/verification_code.png'
@@ -32,7 +30,9 @@ interface IndexState {
   [key: string]: string | boolean | number
 }
 
-export default class Index extends React.Component<{}, IndexState> {
+interface IndexState {}
+
+export default class Index extends React.Component<IndexState, IndexState> {
   public constructor(props: any) {
     super(props)
     this.state = {
@@ -109,8 +109,6 @@ export default class Index extends React.Component<{}, IndexState> {
   }
 
   private handleKeyboardHeightChange(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     event: BaseEventOrig<InputProps.onKeyboardHeightChangeEventDetail>
   ): void {
     Taro.showToast({
@@ -137,7 +135,7 @@ export default class Index extends React.Component<{}, IndexState> {
                 <AtForm>
                   <AtInput
                     name='value1'
-                    title='标准五个字'
+                    title='标题五个字'
                     type='text'
                     placeholder='标准五个字'
                     value={this.state.value1}
@@ -145,7 +143,7 @@ export default class Index extends React.Component<{}, IndexState> {
                   />
                   <AtInput
                     name='value2'
-                    title='标题实在特别长就换行'
+                    title='测试标题特别长换行'
                     placeholder='其他列保持正常间距'
                     value={this.state.value2}
                     onChange={this.handleInput.bind(this, 'value2')}
@@ -283,8 +281,6 @@ export default class Index extends React.Component<{}, IndexState> {
                     placeholder='监听键盘高度事件'
                     value={this.state.value17}
                     onChange={this.handleInput.bind(this, 'value17')}
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
                     onKeyboardHeightChange={this.handleKeyboardHeightChange.bind(
                       this
                     )}

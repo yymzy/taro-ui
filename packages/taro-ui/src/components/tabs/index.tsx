@@ -17,7 +17,7 @@ export default class AtTabs extends React.Component<AtTabsProps, AtTabsState> {
 
   private _tabId: string
   private _touchDot: number
-  private _timer: NodeJS.Timeout | null
+  private _timer: ReturnType<typeof setInterval> | null
   private _interval: number
   private _isMoving: boolean
   private tabHeaderRef: any
@@ -55,7 +55,7 @@ export default class AtTabs extends React.Component<AtTabsProps, AtTabsState> {
         }
         case Taro.ENV_TYPE.WEB: {
           const index = Math.max(idx - 1, 0)
-          const prevTabItem = this.tabHeaderRef.childNodes[index]
+          const prevTabItem = this.tabHeaderRef.children[index]
           prevTabItem &&
             this.setState({
               _scrollTop: prevTabItem.offsetTop,
@@ -118,7 +118,7 @@ export default class AtTabs extends React.Component<AtTabsProps, AtTabsState> {
     const { swipeable, tabDirection } = this.props
     if (!swipeable || tabDirection === 'vertical') return
 
-    clearInterval(this._timer as NodeJS.Timeout)
+    this._timer && clearInterval(this._timer)
     this._interval = 0
     this._isMoving = false
   }
@@ -171,8 +171,7 @@ export default class AtTabs extends React.Component<AtTabsProps, AtTabsState> {
       transformStyle = `translate3d(-${current * 100}%, 0px, 0px)`
     }
     Object.assign(bodyStyle, {
-      transform: transformStyle,
-      '-webkit-transform': transformStyle
+      transform: transformStyle
     })
     if (!animated) {
       bodyStyle.transition = 'unset'

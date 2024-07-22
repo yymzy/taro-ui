@@ -9,6 +9,7 @@ package-lock.json
 .temp
 .DS_Store
 .eslintcache
+.swc
 
 # Editor and IDE files
 .vscode
@@ -28,3 +29,9 @@ stats.html
 
 # Test files
 coverage
+
+# miniapp private files
+*.private.*
+
+# taro rn release
+!packages/taro-ui-demo-rn/release/**

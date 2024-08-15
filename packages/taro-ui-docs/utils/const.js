@@ -1,0 +1,1 @@
+export const DARK_KEY_SINGLE = 'dark-style-docs-20140517' // 暗黑模式的key

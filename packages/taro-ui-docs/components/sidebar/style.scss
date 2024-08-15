@@ -13,6 +13,10 @@
   overflow: auto;
 }
 
+.darkbox {
+  background-color: #23272f;
+}
+
 /**
  * Navigation
  */
@@ -117,6 +121,10 @@
         color: #3f536e;
       }
     }
+  }
+
+  .darktext {
+    color: #fff !important;
   }
 
   &__component {

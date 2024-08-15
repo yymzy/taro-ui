@@ -9,7 +9,8 @@
     {
       "files": [
         "packages/**/*.ts",
-        "packages/**/*.tsx"
+        "packages/**/*.tsx",
+        "packages/**/*.d.ts"
       ],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
@@ -39,6 +40,7 @@
         "@typescript-eslint/member-delimiter-style": [
           "off"
         ],
+        "import/no-named-as-default": "off",
         "class-methods-use-this": "off",
         "prefer-rest-params": "off",
         "react/jsx-filename-extension": [
@@ -52,12 +54,14 @@
             ]
           }
         ],
-        "no-unused-vars": [
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [
           "error",
           {
             "varsIgnorePattern": "React"
           }
         ],
+        "@typescript-eslint/no-empty-interface": "off",
         "no-console": [
           "error",
           {
@@ -74,11 +78,26 @@
               "^UNSAFE_"
             ]
           }
-        ]
+        ],
+        "@typescript-eslint/ban-ts-comment": "off"
       },
       "settings": {
+        "import/ignore": [
+          "react-native"
+        ],
         "react": {
           "version": "detect"
+        },
+        "import/resolver": {
+          "node": {
+            "extensions": [
+              ".js",
+              ".jsx",
+              ".ts",
+              ".tsx",
+              ".d.ts"
+            ]
+          }
         }
       }
     },
@@ -87,7 +106,7 @@
         "packages/**/*.js",
         "packages/**/*.jsx"
       ],
-      "parser": "babel-eslint",
+      "parser": "@babel/eslint-parser",
       "parserOptions": {
         "ecmaVersion": 2017,
         "ecmaFeatures": {
@@ -176,7 +195,9 @@
     {
       "files": [
         "packages/taro-ui-demo/**/*.ts",
-        "packages/taro-ui-demo/**/*.tsx"
+        "packages/taro-ui-demo/**/*.tsx",
+        "packages/taro-ui-demo-rn/**/*.ts",
+        "packages/taro-ui-demo-rn/**/*.tsx"
       ],
       "extends": [
         "taro/react"
@@ -185,7 +206,9 @@
     {
       "files": [
         "packages/taro-ui-demo/config/*.js",
-        "packages/taro-ui-demo/babel.config.js"
+        "packages/taro-ui-demo/babel.config.js",
+        "packages/taro-ui-demo-rn/**/*.ts",
+        "packages/taro-ui-demo-rn/**/*.tsx"
       ],
       "rules": {
         "import/no-commonjs": "off"

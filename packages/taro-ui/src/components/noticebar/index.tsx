@@ -13,8 +13,8 @@ export default class AtNoticebar extends React.Component<
   public static defaultProps: AtNoticeBarProps
   public static propTypes: InferProps<AtNoticeBarProps>
 
-  private timeout: NodeJS.Timeout | null
-  private interval: NodeJS.Timer
+  private timeout: ReturnType<typeof setTimeout> | null
+  private interval: ReturnType<typeof setInterval> | null
 
   public constructor(props: AtNoticeBarProps) {
     super(props)
@@ -25,7 +25,7 @@ export default class AtNoticebar extends React.Component<
       animationData: {
         actions: [{}]
       },
-      dura: 15,
+      dura: 0,
       isWEAPP: Taro.getEnv() === Taro.ENV_TYPE.WEAPP,
       isALIPAY: Taro.getEnv() === Taro.ENV_TYPE.ALIPAY,
       isWEB: Taro.getEnv() === Taro.ENV_TYPE.WEB
@@ -57,8 +57,6 @@ export default class AtNoticebar extends React.Component<
 
   private initAnimation(): void {
     const { isWEAPP, isALIPAY } = this.state
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     this.timeout = setTimeout(() => {
       this.timeout = null
       if (this.state.isWEB) {
@@ -111,8 +109,6 @@ export default class AtNoticebar extends React.Component<
               }, 900)
             }
             animBody()
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
             this.interval = setInterval(animBody, dura * 1000 + 1000)
           })
       }
@@ -139,8 +135,13 @@ export default class AtNoticebar extends React.Component<
     const innerClassName = ['at-noticebar__content-inner']
     if (marquee) {
       close = false
-      style['animation-duration'] = `${dura}s`
       innerClassName.push(animElemId)
+      style['animation-delay'] = '3s'
+
+      if (dura > 0) {
+        style['animation-duration'] = `${dura}s`
+        style['animation-delay'] = '1s'
+      }
     }
 
     const classObject = {

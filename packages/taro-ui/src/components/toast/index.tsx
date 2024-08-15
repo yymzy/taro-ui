@@ -13,7 +13,7 @@ export default class AtToast extends React.Component<
   public static defaultProps: AtToastProps
   public static propTypes: InferProps<AtToastProps>
 
-  private _timer: NodeJS.Timeout | null
+  private _timer: ReturnType<typeof setTimeout> | null
 
   public constructor(props: AtToastProps) {
     super(props)
@@ -38,8 +38,6 @@ export default class AtToast extends React.Component<
     if (duration === 0) {
       return
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     this._timer = setTimeout(() => {
       this.close()
     }, +duration)

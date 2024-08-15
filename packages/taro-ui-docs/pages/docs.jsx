@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 import { Route, Redirect, Switch } from 'react-router-dom'
 import QRCode from 'qrcode.react'
 import PageHeader from '../components/header'
@@ -15,8 +16,16 @@ class Docs extends React.Component {
   constructor() {
     super(...arguments)
     this.state = {
-      fixed: false
+      fixed: false,
+      mode: 'light',
     }
+  }
+
+  componentDidMount() {
+    const _mode = localStorage.getItem('mode')
+    this.setState({
+      mode: _mode || 'light',
+    })
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -25,36 +34,47 @@ class Docs extends React.Component {
     }
   }
 
+  changeMode() {
+    const { handleMode } = this.props
+    const { mode } = this.state
+
+    handleMode && handleMode()
+    this.setState({
+      mode: mode === 'light' ? 'dark' : 'light',
+    })
+  }
+
   render() {
     const data = navsConfig.components
-    const { fixed } = this.state
+    const { fixed, mode } = this.state
     const pathname = this.props.location.pathname
     const reg = /\/\S+\/(\S+)/
     const result = pathname.match(reg)
     const curDemoPath = pathMap[result[1]] || ''
     const curPageUrl = `${window.location.origin}${window.location.pathname}/h5/index.html#/pages/${curDemoPath}/index`
+    const isDark = mode === 'dark'
+    const darkbox = isDark ? 'darkbox' : ''
 
     return (
       <div className='app' id='app'>
-        <PageHeader collapse />
-        <div className='at-container row'>
-          <div className='at-sidebar col-sm-24 col-md-6 col-lg-4'>
-            <Sidebar data={data} />
+        <PageHeader collapse themeMode handleMode={this.changeMode.bind(this)} />
+        <div className={classnames('at-container row', { darkbox })}>
+          <div className={classnames('at-sidebar col-sm-24 col-md-6 col-lg-4', { darkbox })}>
+            <Sidebar data={data} mode={mode} />
           </div>
           <div
             ref='atMarkdown'
-            className={`at-markdown col-sm-24 col-md-18 col-lg-20 ${
-              curDemoPath ? 'at-markdown--demo' : ''
-            }`}
+            className={`at-markdown col-sm-24 col-md-18 col-lg-20 ${curDemoPath ? 'at-markdown--demo' : ''
+              }`}
           >
             {curDemoPath && (
-              <div className='qrcode-menu' style='right: 420px'>
+              <div className='qrcode-menu' style={{ right: '420px' }}>
                 <div className='qrcode-container'>
                   <img src={qrCodeImg} alt='qrcode' />
                   <div className='qrcode-modal'>
                     <h6>扫描二维码查看演示效果</h6>
                     <div className='code-image'>
-                      <QRCode value={curPageUrl} size='140' />
+                      <QRCode value={curPageUrl} size={140} />
                     </div>
                   </div>
                 </div>

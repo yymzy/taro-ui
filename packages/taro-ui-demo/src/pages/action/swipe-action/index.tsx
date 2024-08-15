@@ -1,6 +1,6 @@
 import React from 'react'
 import { AtButton, AtList, AtListItem, AtSwipeAction } from 'taro-ui'
-import { SwipeActionOption } from 'types/swipe-action'
+import { SwipeActionOption } from 'taro-ui/types/swipe-action'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import DocsHeader from '../../components/doc-header'
@@ -33,14 +33,12 @@ interface SwipeActionPageState {
   list: ActionListItem[]
 }
 
+interface SwipeActionPageProps {}
+
 export default class SwipeActionPage extends React.Component<
-  {},
+  SwipeActionPageProps,
   SwipeActionPageState
 > {
-  public config: Taro.PageConfig = {
-    navigationBarTitleText: 'Taro UI'
-  }
-
   public constructor(props: any) {
     super(props)
     this.state = {
@@ -78,6 +76,10 @@ export default class SwipeActionPage extends React.Component<
         }
       ]
     }
+  }
+
+  public config: Taro.PageConfig = {
+    navigationBarTitleText: 'Taro UI'
   }
 
   private handleClick = (item: SwipeActionOption, key: number): void => {
@@ -171,7 +173,10 @@ export default class SwipeActionPage extends React.Component<
 
           <View className='panel'>
             <View className='panel__title'>使用变量控制开关</View>
-            <View className='panel__controller' style='margin-bottom: 10px'>
+            <View
+              className='panel__controller'
+              style={{ marginBottom: '10px' }}
+            >
               <AtButton size='small' onClick={this.handleStatusClick}>
                 当前状态: {isOpened2 ? '开' : '关'}{' '}
               </AtButton>
@@ -208,6 +213,7 @@ export default class SwipeActionPage extends React.Component<
 
           <View className='panel'>
             <View className='panel__title'>传递点击事件</View>
+
             <View className='panel__content no-padding'>
               <View className='example-item example-item--border'>
                 <AtSwipeAction onClick={this.handleClick} options={OPTIONS}>

@@ -32,7 +32,11 @@ $header-height: 80px;
       padding: 0 50px;
 
       .nav-left .logo span {
-        color: #1D1D1F;
+        color: #23272f;
+      }
+
+      .nav-left .logo .darktext {
+        color: rgb(246 247 249);
       }
 
       .nav-right .navbar {
@@ -40,9 +44,21 @@ $header-height: 80px;
       }
 
       .navbar a {
-        color: #1D1D1F;
+        color: #23272f;
+      }
+
+      .navbar .darktext {
+        color: rgb(246 247 249);
+      }
+
+      .navbar .router-link-active {
+        color: $brand-blue-500;
       }
     }
+  }
+
+  &.darktheme {
+    background-color: #23272f;
   }
 }
 
@@ -120,6 +136,10 @@ $header-height: 80px;
             display: inline-block;
           }
         }
+
+        &.darktext {
+          color: $brand-blue-500;
+        }
       }
 
       li {
@@ -138,13 +158,21 @@ $header-height: 80px;
           cursor: not-allowed;
         }
       }
+
+      .nav-icon {
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        top: 50%;
+        margin-top: -12px;
+      }
     }
 
     .btn-language {
       display: inline-block;
       margin: 0 24px;
       padding: 2px 12px;
-      border: 1px solid #1d1d1f;
+      border: 1px solid #23272f;
       border-radius: 2px;
       cursor: pointer;
       transition: color 0.3s, border 0.3s;

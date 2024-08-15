@@ -1,6 +1,6 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { HashRouter as Router, Switch, Route } from 'react-router-dom'
+import { createRoot } from 'react-dom/client'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 
 import 'at-ui-style'
 
@@ -12,12 +12,15 @@ class App extends React.Component {
   constructor(...args) {
     super(...args)
     this.state = {
-      visible: false
+      visible: false,
+      mode: 'light'
     }
   }
   componentDidMount() {
+    const _mode = localStorage.getItem('mode')
     this.setState({
-      visible: true
+      visible: true,
+      mode: _mode || 'light'
     })
   }
 
@@ -25,22 +28,45 @@ class App extends React.Component {
     return true
   }
 
+  handleMode() {
+    const _mode = this.state.mode
+    const modeVal = _mode === 'light' ? 'dark' : 'light'
+    this.setState(
+      {
+        mode: modeVal
+      },
+      () => {
+        localStorage.setItem('mode', modeVal)
+      }
+    )
+  }
+
   render() {
+    const { mode } = this.state
+
     return (
-      <div className='wrapper' style={{ backgroundColor: '#F8FAFF' }}>
+      <div
+        className='wrapper'
+        style={{ backgroundColor: mode === 'light' ? '#F8FAFF' : '#434242' }}
+      >
         <Switch>
           <Route path='/' exact component={Index} />
-          <Route path='/docs' component={Docs} />
+          <Route
+            path='/docs'
+            render={props => (
+              <Docs {...props} handleMode={this.handleMode.bind(this)} />
+            )}
+          />
           <Route path='/guide' component={Guide} />
         </Switch>
       </div>
     )
   }
 }
-
-ReactDOM.render(
+const container = document.getElementById('container')
+const root = createRoot(container)
+root.render(
   <Router>
     <App />
-  </Router>,
-  document.getElementById('container')
+  </Router>
 )

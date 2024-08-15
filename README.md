@@ -4,8 +4,6 @@
 
 一款基于 `Taro` 框架开发的多端 UI 组件库
 
-> Taro UI 3 目前仍在开发中，`alpha` 版本可能会出现较大改动并且不保证功能完整可用，请谨慎使用。
-
 ## 特性
 
 - 基于 `Taro` 开发 UI 组件
@@ -26,24 +24,26 @@ Taro 是由 [凹凸实验室](https://aotu.io) 倾力打造的多端开发解决
 
 ## 相关链接
 
-- [Taro UI 使用文档](https://taro-ui.aotu.io)
+- [Taro UI 使用文档](https://taro-ui.taro.zone)
 - [Taro UI 官方示例](https://github.com/NervJS/taro-ui-demo)
-- [Taro](https://taro.aotu.io/)
+- [Taro](https://taro.jd.com/)
 - [Taro 物料市场](https://taro-ext.jd.com)
 - [Taro 论坛 Taro-UI 板块](https://taro-club.jd.com/category/11/taro-ui)
 
 ## 安装
 
-需要安装 `Taro` 开发工具 `@tarojs/cli`，`Taro` 版本需要在 `1.0.0-beta.18` 以上
+### 2.x
+当 Taro 版本 < 3 时，使用 2.x 版本
 
 ```bash
-npm install -g @tarojs/cli
+$ npm install taro-ui@2.3.4
 ```
 
-然后在项目中安装 Taro UI
+### 3.x
+当 Taro 版本 ≥ 3 时，使用 3.x 版本
 
 ```bash
-npm install taro-ui
+$ npm install taro-ui@latest
 ```
 
 ## 使用

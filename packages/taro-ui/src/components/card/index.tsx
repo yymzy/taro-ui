@@ -15,16 +15,8 @@ export default class AtCard extends React.Component<AtCardProps> {
   }
 
   public render(): JSX.Element {
-    const {
-      title,
-      note,
-      extra,
-      extraStyle,
-      thumb,
-      isFull,
-      icon,
-      renderIcon
-    } = this.props
+    const { title, note, extra, extraStyle, thumb, isFull, icon, renderIcon } =
+      this.props
 
     const rootClass = classNames(
       'at-card',
@@ -63,9 +55,9 @@ export default class AtCard extends React.Component<AtCardProps> {
 
           <Text className='at-card__header-title'>{title}</Text>
           {extra && (
-            <Text style={{ ...extraStyle }} className='at-card__header-extra'>
+            <View style={{ ...extraStyle }} className='at-card__header-extra'>
               {extra}
-            </Text>
+            </View>
           )}
         </View>
         <View className='at-card__content'>
@@ -82,7 +74,6 @@ AtCard.defaultProps = {
   isFull: false,
   thumb: '',
   title: '',
-  extra: '',
   extraStyle: {}
 }
 
@@ -91,7 +82,7 @@ AtCard.propTypes = {
   isFull: PropTypes.bool,
   thumb: PropTypes.string,
   title: PropTypes.string,
-  extra: PropTypes.string,
+  extra: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   icon: PropTypes.object,
   onClick: PropTypes.func,
   renderIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),

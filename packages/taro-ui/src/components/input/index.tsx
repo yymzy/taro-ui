@@ -127,7 +127,9 @@ export default class AtInput extends React.Component<AtInputProps> {
       autoFocus = false,
       focus = false,
       value,
-      required
+      required,
+      // @yym-mix
+      alwaysEmbed
     } = this.props
     const { type, maxLength, disabled, password } = getInputProps(this.props)
 
@@ -189,6 +191,8 @@ export default class AtInput extends React.Component<AtInputProps> {
             onBlur={this.handleBlur}
             onConfirm={this.handleConfirm}
             onKeyboardHeightChange={this.handleKeyboardHeightChange}
+            // @yym-mix
+            alwaysEmbed={alwaysEmbed}
           />
           {clear && value && (
             <View className='at-input__icon' onTouchEnd={this.handleClearValue}>
@@ -237,7 +241,9 @@ AtInput.defaultProps = {
   focus: false,
   required: false,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onChange: (): void => {}
+  onChange: (): void => {},
+  // @yym-mix
+  alwaysEmbed: false
 }
 
 AtInput.propTypes = {
@@ -271,5 +277,7 @@ AtInput.propTypes = {
   onConfirm: PropTypes.func,
   onErrorClick: PropTypes.func,
   onClick: PropTypes.func,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  // @yym-mix
+  alwaysEmbed: PropTypes.bool,
 }

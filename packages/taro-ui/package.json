@@ -1,5 +1,5 @@
 {
-  "name": "taro-ui",
+  "name": "taro-ui3",
   "version": "3.3.0",
   "description": "UI KIT for Taro",
   "module": "dist/index.esm.js",

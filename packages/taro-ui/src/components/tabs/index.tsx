@@ -218,6 +218,10 @@ export default class AtTabs extends React.Component<AtTabsProps, AtTabsState> {
             scrollLeft={_scrollLeft}
             scrollTop={_scrollTop}
             scrollIntoView={_scrollIntoView}
+            // @yym-mix
+            enableFlex
+            enhanced
+            showScrollbar={false}
           >
             {tabItems}
           </ScrollView>

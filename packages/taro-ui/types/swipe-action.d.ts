@@ -65,6 +65,11 @@ export interface AtSwipeActionProps extends AtComponent {
    * @deprecated 已废弃，无需设置 areaWidth
    */
   areaWidth?: number
+
+  /**
+   * 用于兼容获取跨自定义组件的后代元素
+   */
+  parentSelector?: string
 }
 
 export interface AtSwipeActionState {

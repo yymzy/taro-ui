@@ -59,12 +59,31 @@ export default class AtSwipeAction extends React.Component<
   }
 
   /**
+   * 获取滑块区域与options操作区域选择器
+   */
+  private getSelectorStr(type: string): string {
+    const { componentId } = this.state
+    const { parentSelector } = this.props
+    return (parentSelector ? `${parentSelector} >>> ` : '') + `#${type}-${componentId}`
+  }
+
+  /**
    * 获取滑动区域宽度
    */
   private async getAreaWidth(): Promise<void> {
-    const systemInfo = await Taro.getSystemInfo()
+    const actionRect = await delayGetClientRect({
+      selectorStr: this.getSelectorStr('swipeAction')
+    })
+
+    let eleWidth = actionRect[0].width
+
+    if (!eleWidth) {
+      const systemInfo = await Taro.getSystemInfo()
+      eleWidth = systemInfo.windowWidth;
+    }
+
     this.setState({
-      eleWidth: systemInfo.windowWidth
+      eleWidth
     })
   }
 
@@ -72,10 +91,8 @@ export default class AtSwipeAction extends React.Component<
    * 获取最大偏移量
    */
   private async getMaxOffsetSize(): Promise<void> {
-    const { componentId } = this.state
-
     const actionOptionsRect = await delayGetClientRect({
-      selectorStr: `#swipeActionOptions-${componentId}`
+      selectorStr: this.getSelectorStr('swipeActionOptions')
     })
 
     const maxOffsetSize = actionOptionsRect[0].width
@@ -86,32 +103,29 @@ export default class AtSwipeAction extends React.Component<
   }
 
   private _reset(isOpened: boolean): void {
-    if (isOpened) {
-      const { maxOffsetSize } = this.state
-      if (process.env.TARO_ENV === 'jd') {
-        this.setState({
-          _isOpened: true,
-          offsetSize: -maxOffsetSize + 0.01
-        })
-      } else {
-        this.setState({
-          _isOpened: true,
-          offsetSize: -maxOffsetSize
-        })
-      }
-    } else {
-      this.setState(
-        {
-          offsetSize: this.moveX
-        },
-        () => {
+    this.setState({
+      offsetSize: this.moveX
+    }, () => {
+      if (isOpened) {
+        const { maxOffsetSize } = this.state
+        if (process.env.TARO_ENV === 'jd') {
           this.setState({
-            offsetSize: 0,
-            _isOpened: false
+            _isOpened: true,
+            offsetSize: -maxOffsetSize + 0.01
+          })
+        } else {
+          this.setState({
+            _isOpened: true,
+            offsetSize: -maxOffsetSize
           })
         }
-      )
-    }
+      } else {
+        this.setState({
+          offsetSize: 0,
+          _isOpened: false
+        })
+      }
+    })
   }
 
   private handleOpened = (event: CommonEvent): void => {
@@ -165,18 +179,20 @@ export default class AtSwipeAction extends React.Component<
     const { options, disabled } = this.props
     const rootClass = classNames('at-swipe-action', this.props.className)
 
+    const areaWidth = eleWidth > 0 ? `${eleWidth}px` : '100%'
+
     return (
       <View
         id={`swipeAction-${componentId}`}
         className={rootClass}
         style={{
-          width: `${eleWidth}px`
+          width: areaWidth
         }}
       >
         <MovableArea
           className='at-swipe-action__area'
           style={{
-            width: `${eleWidth}px`
+            width: areaWidth
           }}
         >
           <MovableView
@@ -191,7 +207,13 @@ export default class AtSwipeAction extends React.Component<
               width: `${eleWidth + maxOffsetSize}px`
             }}
           >
-            {this.props.children}
+            <View
+              style={{
+                width: areaWidth
+              }}
+            >
+              {this.props.children}
+            </View>
             {Array.isArray(options) && options.length > 0 ? (
               <AtSwipeActionOptions
                 options={options}

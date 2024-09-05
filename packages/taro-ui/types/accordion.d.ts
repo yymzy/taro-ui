@@ -37,6 +37,10 @@ export interface AtAccordionProps extends AtComponent {
    * 点击头部触发事件
    */
   onClick?: (open: boolean, event: CommonEvent) => void
+  /**
+   * 兼容跨组件获取高度
+   */
+  parentSelector?: string
 }
 
 export interface AtAccordionState {

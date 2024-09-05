@@ -33,14 +33,22 @@ export default class AtAccordion extends React.Component<
     this.props.onClick && this.props.onClick(!open, event)
   }
 
+  /**
+   * 获取滑块区域与options操作区域选择器
+   */
+  private getSelectorStr(type: string): string {
+    const { componentId } = this.state
+    const { parentSelector } = this.props
+    return (parentSelector ? `${parentSelector} >>> ` : '') + `#${type}-${componentId}`
+  }
+
   private toggleWithAnimation(): void {
     const { open, isAnimation } = this.props
-    const { componentId } = this.state
     if (!this.isCompleted || !isAnimation) return
 
     this.isCompleted = false
 
-    delayQuerySelector(`#at-accordion__body-${componentId}`, 0).then(rect => {
+    delayQuerySelector(this.getSelectorStr('at-accordion__body'), 0).then(rect => {
       const height = parseInt(rect[0].height.toString())
       const startHeight = open ? height : 0
       const endHeight = open ? 0 : height

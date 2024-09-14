@@ -20,6 +20,7 @@ export default class AtSwipeAction extends React.Component<
   public static propTypes: InferProps<AtSwipeActionProps>
 
   private moveX: number
+  private delayTime: NodeJS.Timeout
 
   public constructor(props: AtSwipeActionProps) {
     super(props)
@@ -53,6 +54,7 @@ export default class AtSwipeAction extends React.Component<
     const { _isOpened, maxOffsetSize } = this.state
 
     if (isOpened !== _isOpened) {
+      clearTimeout(this.delayTime);
       this.moveX = isOpened ? 0 : maxOffsetSize
       this._reset(!!isOpened) // TODO: Check behavior
     }
@@ -64,7 +66,7 @@ export default class AtSwipeAction extends React.Component<
   private getSelectorStr(type: string): string {
     const { componentId } = this.state
     const { parentSelector } = this.props
-    return (parentSelector ? `${parentSelector} >>> ` : '') + `#${type}-${componentId}`
+    return (parentSelector && process.env.TARO_ENV === 'weapp' ? `${parentSelector} >>> ` : '') + `#${type}-${componentId}`
   }
 
   /**
@@ -102,29 +104,32 @@ export default class AtSwipeAction extends React.Component<
     })
   }
 
-  private _reset(isOpened: boolean): void {
+  private _reset(isOpened: boolean, then: () => void = () => { }): void {
     this.setState({
       offsetSize: this.moveX
     }, () => {
-      if (isOpened) {
-        const { maxOffsetSize } = this.state
-        if (process.env.TARO_ENV === 'jd') {
-          this.setState({
-            _isOpened: true,
-            offsetSize: -maxOffsetSize + 0.01
-          })
+      this.moveX = 0;
+      Taro.nextTick(() => {
+        if (isOpened) {
+          const { maxOffsetSize } = this.state
+          if (process.env.TARO_ENV === 'jd') {
+            this.setState({
+              _isOpened: true,
+              offsetSize: -maxOffsetSize + 0.01
+            }, then)
+          } else {
+            this.setState({
+              _isOpened: true,
+              offsetSize: -maxOffsetSize
+            }, then)
+          }
         } else {
           this.setState({
-            _isOpened: true,
-            offsetSize: -maxOffsetSize
-          })
+            offsetSize: 0,
+            _isOpened: false
+          }, then)
         }
-      } else {
-        this.setState({
-          offsetSize: 0,
-          _isOpened: false
-        })
-      }
+      })
     })
   }
 
@@ -153,20 +158,26 @@ export default class AtSwipeAction extends React.Component<
       onClick(item, index, event)
     }
     if (autoClose) {
-      this._reset(false) // TODO: Check behavior
-      this.handleClosed(event)
+      this._reset(false, () => {
+        this.handleClosed(event)
+      }) // TODO: Check behavior
     }
   }
 
   onTouchEnd = e => {
-    const { maxOffsetSize } = this.state
-    if (Math.abs(this.moveX) < maxOffsetSize / 2) {
-      this._reset(false)
-      this.handleClosed(e)
-    } else {
-      this._reset(true)
-      this.handleOpened(e)
-    }
+    clearTimeout(this.delayTime);
+    this.delayTime = setTimeout(() => {
+      const { maxOffsetSize } = this.state
+      if (Math.abs(this.moveX) < maxOffsetSize / 2) {
+        this._reset(false, () => {
+          this.handleClosed(e)
+        })
+      } else {
+        this._reset(true, () => {
+          this.handleOpened(e)
+        })
+      }
+    }, 10);
   }
 
   onChange = e => {
@@ -175,7 +186,6 @@ export default class AtSwipeAction extends React.Component<
 
   public render(): JSX.Element {
     const { componentId, maxOffsetSize, eleWidth, offsetSize } = this.state
-
     const { options, disabled } = this.props
     const rootClass = classNames('at-swipe-action', this.props.className)
 

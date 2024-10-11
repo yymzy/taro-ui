@@ -125,6 +125,10 @@ export interface AtInputProps extends AtComponent, OmitInputProps {
    */
   maxLength?: number
   /**
+   * 兼容支付宝是否允许原生组件渲染
+   */
+  enableNative?: boolean
+  /**
    * 输入框失去焦点时触发的事件，v2.0.3 版本可以获取 event 参数
    */
   onBlur?: InputFunction<string | number, BlurEventDetail>

@@ -54,6 +54,11 @@ export interface AtButtonProps extends AtComponent, TaroButtonProps {
    */
   disabled?: boolean
   /**
+   * 用于结合openType===share做分享按钮传值
+   * @default undefined
+   */
+  dataset?: Record<string, any>
+  /**
    * 点击按钮时触发
    */
   onClick?: CommonEventFunction

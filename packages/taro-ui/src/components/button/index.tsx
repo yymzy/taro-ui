@@ -79,7 +79,8 @@ export default class AtButton extends React.Component<
       sendMessagePath,
       sendMessageImg,
       showMessageCard,
-      appParameter
+      appParameter,
+      dataset
     } = this.props
     const { isWEAPP, isALIPAY, isWEB } = this.state
     const rootClassName = ['at-button']
@@ -128,6 +129,7 @@ export default class AtButton extends React.Component<
         onOpenSetting={this.onOpenSetting.bind(this)}
         onError={this.onError.bind(this)}
         onContact={this.onContact.bind(this)}
+        {...dataset}
       ></Button>
     )
 

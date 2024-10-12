@@ -39,7 +39,7 @@ export default class AtAccordion extends React.Component<
   private getSelectorStr(type: string): string {
     const { componentId } = this.state
     const { parentSelector } = this.props
-    return (parentSelector && process.env.TARO_ENV === 'weapp' ? `${parentSelector} >>> ` : '') + `#${type}-${componentId}`
+    return (parentSelector && (process.env.TARO_ENV === 'weapp' || process.env.TARO_ENV === 'tt') ? `${parentSelector} >>> ` : '') + `#${type}-${componentId}`
   }
 
   private toggleWithAnimation(): void {

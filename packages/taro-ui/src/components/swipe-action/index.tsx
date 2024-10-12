@@ -66,7 +66,7 @@ export default class AtSwipeAction extends React.Component<
   private getSelectorStr(type: string): string {
     const { componentId } = this.state
     const { parentSelector } = this.props
-    return (parentSelector && process.env.TARO_ENV === 'weapp' ? `${parentSelector} >>> ` : '') + `#${type}-${componentId}`
+    return (parentSelector && (process.env.TARO_ENV === 'weapp' || process.env.TARO_ENV === 'tt') ? `${parentSelector} >>> ` : '') + `#${type}-${componentId}`
   }
 
   /**
@@ -94,7 +94,7 @@ export default class AtSwipeAction extends React.Component<
    */
   private async getMaxOffsetSize(): Promise<void> {
     const actionOptionsRect = await delayGetClientRect({
-      selectorStr: this.getSelectorStr('swipeActionOptions')
+      selectorStr: this.getSelectorStr('swipeActionOptions'),
     })
 
     const maxOffsetSize = actionOptionsRect[0].width

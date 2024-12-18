@@ -66,8 +66,13 @@ export default class AtCalendarBody extends React.Component<
     }
   }
 
+  private getSelectorStr(selector: string): string {
+    const { parentSelector } = this.props
+    return (parentSelector && (process.env.TARO_ENV === 'weapp' || process.env.TARO_ENV === 'tt') ? `${parentSelector} >>> ` : '') + selector
+  }
+
   public componentDidMount(): void {
-    delayQuerySelector('.at-calendar-slider__main').then(res => {
+    delayQuerySelector(this.getSelectorStr('.at-calendar-slider__main')).then(res => {
       this.maxWidth = res[0].width
     })
   }

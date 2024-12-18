@@ -283,7 +283,8 @@ export default class AtCalendar extends React.Component<
       hideArrow,
       isVertical,
       monthFormat,
-      selectedDates
+      selectedDates,
+      parentSelector
     } = this.props as AtCalendarPropsWithDefaults
 
     return (
@@ -312,6 +313,7 @@ export default class AtCalendar extends React.Component<
           onDayClick={this.handleDayClick}
           onSwipeMonth={this.setMonth}
           onLongClick={this.handleDayLongClick}
+          parentSelector={parentSelector}
         />
       </View>
     )

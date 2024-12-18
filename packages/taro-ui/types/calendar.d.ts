@@ -112,6 +112,11 @@ export interface AtCalendarPropsBase {
   onDayLongClick?: (item: { value: string }) => void
 
   onMonthChange?: (value: string) => void
+
+  /**
+   * 用于兼容获取跨自定义组件的后代元素
+   */
+  parentSelector?: string
 }
 
 export interface AtCalendarSingleSelectedProps extends AtCalendarPropsBase {
@@ -213,6 +218,12 @@ export interface AtCalendarBodyProps {
   onSwipeMonth: (vectorCount: number) => void
 
   onLongClick: (item: Calendar.Item) => void
+
+
+  /**
+   * 用于兼容获取跨自定义组件的后代元素
+   */
+  parentSelector?: string
 }
 
 export interface AtCalendarBodyState {

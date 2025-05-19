@@ -127,6 +127,7 @@ export default class AtInputNumber extends React.Component<AtInputNumberProps> {
 
   public render(): JSX.Element {
     const {
+      cursor,
       customStyle,
       className,
       width,
@@ -173,6 +174,7 @@ export default class AtInputNumber extends React.Component<AtInputNumberProps> {
           disabled={disabledInput || disabled}
           onInput={this.handleInput}
           onBlur={this.handleBlur}
+          cursor={cursor}
         />
         <View
           className={plusBtnCls}
@@ -186,6 +188,7 @@ export default class AtInputNumber extends React.Component<AtInputNumberProps> {
 }
 
 AtInputNumber.defaultProps = {
+  cursor: -1,
   customStyle: {},
   className: '',
   disabled: false,
@@ -202,6 +205,7 @@ AtInputNumber.defaultProps = {
 }
 
 AtInputNumber.propTypes = {
+  cursor: PropTypes.number,
   customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   className: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

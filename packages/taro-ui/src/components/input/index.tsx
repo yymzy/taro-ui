@@ -228,7 +228,7 @@ AtInput.defaultProps = {
   title: '',
   cursorSpacing: 50,
   confirmType: 'done',
-  cursor: 0,
+  cursor: -1,
   selectionStart: -1,
   selectionEnd: -1,
   adjustPosition: true,

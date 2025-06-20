@@ -18,6 +18,12 @@ export default class AtCurtain extends React.Component<AtCurtainProps> {
     e.stopPropagation()
   }
 
+  private handleClickOverlay(e: CommonEvent): void {
+    if (this.props.closeOnClickOverlay) {
+      this.onClose(e)
+    }
+  }
+
   public render(): JSX.Element {
     const { className, customStyle, isOpened, closeBtnPosition } = this.props
 
@@ -39,8 +45,8 @@ export default class AtCurtain extends React.Component<AtCurtainProps> {
         style={customStyle}
         onClick={this._stopPropagation}
       >
-        <View className='at-curtain__container'>
-          <View className='at-curtain__body'>
+        <View className='at-curtain__container' onClick={this.handleClickOverlay}>
+          <View className='at-curtain__body' onClick={this._stopPropagation}>
             {this.props.children}
             <View
               className={btnCloseClass}
@@ -59,7 +65,7 @@ AtCurtain.defaultProps = {
   isOpened: false,
   closeBtnPosition: 'bottom',
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onClose: (): void => {}
+  onClose: (): void => { }
 }
 
 AtCurtain.propTypes = {

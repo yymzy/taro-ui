@@ -16,6 +16,11 @@ export interface AtCurtainProps extends AtComponent {
    */
   closeBtnPosition?: 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right'
   /**
+   * 点击浮层的时候时候自动关闭
+   * @default true
+   */
+  closeOnClickOverlay?: boolean
+  /**
    * 点击关闭按钮触发事件
    */
   onClose: CommonEventFunction

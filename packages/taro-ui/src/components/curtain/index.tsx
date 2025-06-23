@@ -45,7 +45,7 @@ export default class AtCurtain extends React.Component<AtCurtainProps> {
         style={customStyle}
         onClick={this._stopPropagation}
       >
-        <View className='at-curtain__container' onClick={this.handleClickOverlay}>
+        <View className='at-curtain__container' onClick={this.handleClickOverlay.bind(this)}>
           <View className='at-curtain__body' onClick={this._stopPropagation}>
             {this.props.children}
             <View
